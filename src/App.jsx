@@ -1,14 +1,41 @@
 import './App.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+//*Components
 import { Comment } from './components/comment.jsx'
+import { SendComment } from './components/sendComment'
+//*Helpers (http)
+import { getComments } from './helpers/getComments'
+import { getCurrentUser } from './helpers/getCurrentUser'
 
 function App() {
 
-    return (
-        <div className="comments-container">
-            <Comment votes="12" user="User Name" time="1 year ago" content="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." />
-        </div>
-    )
+  const [ comments, setComments ] = useState([])
+  const [ currentUser, setCurrentUser ] = useState({ image:{} })
+
+  useEffect(() => {
+    getComments().then(comments => setComments(comments))
+    getCurrentUser().then(user => setCurrentUser(user))
+  }, [])
+
+  return (
+    <div className="comments-container">
+      {
+        comments.map((comment, index) => {
+          return (
+            <Comment
+            votes={comment.score}
+            avatar={comment.user.image.webp}
+            user={comment.user.username}
+            time={comment.createdAt}
+            content={comment.content}
+            replies={comment.replies}
+            key={comment.id} />
+          )
+        })
+      }
+      <SendComment avatar={currentUser.image.webp} />
+    </div>
+  )
 }
 
 export default App

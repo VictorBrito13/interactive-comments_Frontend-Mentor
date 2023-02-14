@@ -1,0 +1,36 @@
+.send-comment-container{
+    background-color: var(--white);
+    border-radius: 15px;
+    display: grid;
+    grid-template-columns: 20% 80%;
+    padding: 15px;
+}
+.send-comment{
+    height: 100px;
+    width: 90%;
+    margin: 5px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+.send-comment-container img{
+    justify-self: center;
+    align-self: flex-start;
+}
+textarea{
+    width: 80%;
+    height: 60%;
+    outline: 1px solid var(--very-light-gray);
+    border-radius: 10px;
+    resize: none;
+    padding: 10px;
+}
+input{
+    align-self: flex-start;
+    background-color: var(--moderate-blue);
+    border: 0px;
+    color: var(--white);
+    padding: 10px;
+    min-width: 90px;
+    border-radius: 5px;
+}
