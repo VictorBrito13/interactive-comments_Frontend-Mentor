@@ -15,13 +15,21 @@
   }
 */
 import './sendComment.css'
+import { useState, useEffect } from 'react'
+import { getCurrentUser } from '../helpers/getCurrentUser'
+
 
 function SendComment(props){
-  const { avatar } = props
+
+  const [ currentUser, setCurrentUser ] = useState({ image:{} })
+
+  useEffect(() => {
+    getCurrentUser().then(user => setCurrentUser(user))
+  }, [])
 
   return (
     <div className="send-comment-container">
-      <img src={avatar} />
+      <img src={currentUser.image.webp} />
       <form className="send-comment">
         <textarea placeholder="Add a comment"></textarea>
         <input type="submit" value="SEND" />

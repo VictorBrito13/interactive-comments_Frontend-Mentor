@@ -33,4 +33,5 @@ input{
     padding: 10px;
     min-width: 90px;
     border-radius: 5px;
+    cursor: pointer;
 }
