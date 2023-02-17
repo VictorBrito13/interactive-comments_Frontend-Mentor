@@ -17,14 +17,24 @@
 import './sendComment.css'
 import { useState, useEffect } from 'react'
 import { getCurrentUser } from '../helpers/getCurrentUser'
+import { BehaviorSubject } from 'rxjs'
+
+const $currentUser = new BehaviorSubject({ username: '', image:{} })
+
+function $getCurrentUser(){
+  return $currentUser.asObservable()
+}
 
 
 function SendComment(props){
 
-  const [ currentUser, setCurrentUser ] = useState({ image:{} })
+  const [ currentUser, setCurrentUser ] = useState({ username: '', image:{} })
 
   useEffect(() => {
-    getCurrentUser().then(user => setCurrentUser(user))
+    getCurrentUser().then(user => setCurrentUser(prevState => {
+      $currentUser.next(prevState)
+      return user
+    }))
   }, [])
 
   return (
@@ -39,4 +49,4 @@ function SendComment(props){
 
 }
 
-export { SendComment }
+export { SendComment, $getCurrentUser }

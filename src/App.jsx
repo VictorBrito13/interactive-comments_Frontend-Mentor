@@ -1,8 +1,9 @@
 import './App.css'
 import { useState, useEffect } from 'react'
 //*Components
-import { Comment } from './components/comment.jsx'
+import { Comment } from './components/comment'
 import { SendComment } from './components/sendComment'
+import { DeleteCommentModal } from './components/deleteCommentModal'
 //*Helpers (http)
 import { getComments } from './helpers/getComments'
 
@@ -17,6 +18,7 @@ function App() {
 
   return (
     <div className="comments-container">
+      <DeleteCommentModal />
       {
         comments.map((comment) => {
           return (

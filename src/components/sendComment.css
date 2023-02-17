@@ -34,4 +34,10 @@ input{
     min-width: 90px;
     border-radius: 5px;
     cursor: pointer;
+    opacity: 1;
+    transition: var(--transition-opacity);
+}
+input:hover{
+    transition: var(--transition-opacity);
+    opacity: .7;
 }

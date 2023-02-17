@@ -1,12 +1,18 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './comment.css'
-import { SendComment } from './sendComment'
+import { SendComment, $getCurrentUser } from './sendComment'
 
 function Comment(props) {
 	let { votes, avatar, user, time, content, replies } = props
 
 	let [ score, setVotes ] = useState(votes)
 	let [ replyComponent, setReplyComponent ] = useState(false)
+	let [ deleteComment, setDeleteComment ] = useState(false)
+	let [ currentUser, setCurrentUser ] = useState(null)
+
+	useEffect(() => {
+		$getCurrentUser().subscribe(user => setCurrentUser(user))
+	}, [])
 
 	function vote(action){
 		if(action === 'plus'){
@@ -18,6 +24,10 @@ function Comment(props) {
 
 	function reply(){
 		setReplyComponent(prevState => !prevState)
+	}
+
+	function deleteCommentF(){
+		setDeleteComment(prevState => !prevState)
 	}
 
 	return (
@@ -37,10 +47,30 @@ function Comment(props) {
 					<h2 className="comment-user">{ user }</h2>
 					<span className="comment-time">{ time }</span>
 				</span>
-				<span className='reply-container' onClick={reply}>
-					<img src="./src/assets/images/icon-reply.svg" />
-					<span>Reply</span>
-				</span>
+
+				{
+					user === currentUser?.username ?
+
+					<span className="actions-container">
+
+						<span className="actions-delete" onClick={deleteCommentF}>
+						<img src="./src/assets/images/icon-delete.svg" />
+							Delete
+						</span>
+
+						<span className="actions-update" onClick={reply}>
+							<img src="./src/assets/images/icon-edit.svg" />
+							Edit
+						</span>
+					</span>
+
+					:
+
+					<span className='reply-container' onClick={reply}>
+						<img src="./src/assets/images/icon-reply.svg" />
+						<span>Reply</span>
+					</span>
+				}
 			</div>
 			<p className="comment-content">{ content }</p>
 			<div className="comment-replies-container">

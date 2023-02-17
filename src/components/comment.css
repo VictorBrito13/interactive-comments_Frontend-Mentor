@@ -68,6 +68,27 @@
 .reply-container *{
     margin-left: 5px;
 }
+.actions-container{
+    display: flex;
+    gap: 15px;
+    cursor: pointer;
+}
+.actions-delete{
+    color: var(--soft-red);
+    opacity: 1;
+    transition: var(--transition-opacity);
+}
+.actions-delete:hover{
+    opacity: .7;
+    transition: var(--transition-opacity);
+}
+.actions-update{
+    color: var(--dark-blue);
+}
+.actions-update:hover{
+    opacity: .7;
+    transition: var(--transition-opacity);
+}
 .comment-user{
     font-size: 1rem;
 }
