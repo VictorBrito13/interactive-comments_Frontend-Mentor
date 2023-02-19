@@ -1,24 +1,30 @@
 import './App.css'
 import { useState, useEffect } from 'react'
 //*Components
-import { Comment } from './components/comment'
+import { Comment, getDeleteOb } from './components/comment'
 import { SendComment } from './components/sendComment'
-import { DeleteCommentModal } from './components/deleteCommentModal'
+import { DeleteCommentModal, getDeleteStateModal } from './components/deleteCommentModal'
 //*Helpers (http)
 import { getComments } from './helpers/getComments'
 
 function App() {
 
   const [ comments, setComments ] = useState([])
+  const [ deleteCommentState, setDeleteCommentState ] = useState(false)
 
 
   useEffect(() => {
+    let deleteComment
     getComments().then(comments => setComments(comments))
+    getDeleteOb().subscribe(value => setDeleteCommentState(value))
+    getDeleteStateModal().subscribe(value => setDeleteCommentState(value))
   }, [])
 
   return (
     <div className="comments-container">
-      <DeleteCommentModal />
+      {
+        deleteCommentState ? <DeleteCommentModal /> : null
+      }
       {
         comments.map((comment) => {
           return (

@@ -1,17 +1,25 @@
 import { useState, useEffect } from 'react'
 import './comment.css'
 import { SendComment, $getCurrentUser } from './sendComment'
+import { BehaviorSubject } from 'rxjs'
+
+const $deteleOb = new BehaviorSubject(false)
+function getDeleteOb() {
+	return $deteleOb.asObservable()
+}
 
 function Comment(props) {
 	let { votes, avatar, user, time, content, replies } = props
 
 	let [ score, setVotes ] = useState(votes)
 	let [ replyComponent, setReplyComponent ] = useState(false)
-	let [ deleteComment, setDeleteComment ] = useState(false)
+	let [ deleteComment, setDeleteComment ] = useState(true)
 	let [ currentUser, setCurrentUser ] = useState(null)
 
 	useEffect(() => {
-		$getCurrentUser().subscribe(user => setCurrentUser(user))
+		let user
+		$getCurrentUser().subscribe(obUser => user = obUser)
+		setCurrentUser(user)
 	}, [])
 
 	function vote(action){
@@ -27,7 +35,8 @@ function Comment(props) {
 	}
 
 	function deleteCommentF(){
-		setDeleteComment(prevState => !prevState)
+		setDeleteComment(prevState => prevState = true)
+		$deteleOb.next(deleteComment)
 	}
 
 	return (
@@ -94,4 +103,4 @@ function Comment(props) {
 	)
 }
 
-export { Comment }
+export { Comment, getDeleteOb }
