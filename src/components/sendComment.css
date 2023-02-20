@@ -1,12 +1,9 @@
 .send-comment-container{
     background-color: var(--white);
     border-radius: 15px;
-    display: grid;
-    grid-template-columns: 20% 80%;
     padding: 15px;
 }
 .send-comment{
-    height: 100px;
     width: 90%;
     margin: 5px;
     display: flex;
@@ -19,7 +16,7 @@
 }
 textarea{
     width: 80%;
-    height: 60%;
+    height: 100px;
     outline: 1px solid var(--very-light-gray);
     border-radius: 10px;
     resize: none;
@@ -40,4 +37,23 @@ input{
 input:hover{
     transition: var(--transition-opacity);
     opacity: .7;
+}
+
+@media (max-width: 1000px){
+    .send-comment{
+        display: grid;
+        grid-template-areas:
+                            "reply reply"
+                            "avatar send";
+        row-gap: 10px;
+    }
+    .send-comment textarea{
+        grid-area: reply;
+    }
+    .send-comment img{
+        grid-area: avatar;
+    }
+    .send-comment input[type="submit"]{
+        grid-area: send;
+    }
 }

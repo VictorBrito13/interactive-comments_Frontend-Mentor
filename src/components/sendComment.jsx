@@ -39,8 +39,8 @@ function SendComment(props){
 
   return (
     <div className="send-comment-container">
-      <img src={currentUser.image.webp} />
       <form className="send-comment">
+        <img src={currentUser.image.webp} />
         <textarea placeholder="Add a comment"></textarea>
         <input type="submit" value="SEND" />
       </form>

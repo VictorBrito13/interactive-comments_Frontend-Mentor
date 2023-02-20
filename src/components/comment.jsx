@@ -56,31 +56,30 @@ function Comment(props) {
 					<h2 className="comment-user">{ user }</h2>
 					<span className="comment-time">{ time }</span>
 				</span>
-
-				{
-					user === currentUser?.username ?
-
-					<span className="actions-container">
-
-						<span className="actions-delete" onClick={deleteCommentF}>
-						<img src="./src/assets/images/icon-delete.svg" />
-							Delete
-						</span>
-
-						<span className="actions-update" onClick={reply}>
-							<img src="./src/assets/images/icon-edit.svg" />
-							Edit
-						</span>
-					</span>
-
-					:
-
-					<span className='reply-container' onClick={reply}>
-						<img src="./src/assets/images/icon-reply.svg" />
-						<span>Reply</span>
-					</span>
-				}
 			</div>
+			{
+				user === currentUser?.username ?
+
+				<span className="actions-container">
+
+					<span className="actions-delete" onClick={deleteCommentF}>
+					<img src="./src/assets/images/icon-delete.svg" />
+						Delete
+					</span>
+
+					<span className="actions-update" onClick={reply}>
+						<img src="./src/assets/images/icon-edit.svg" />
+						Edit
+					</span>
+				</span>
+
+				:
+
+				<span className='reply-container' onClick={reply}>
+					<img src="./src/assets/images/icon-reply.svg" />
+					<span>Reply</span>
+				</span>
+			}
 			<p className="comment-content">{ content }</p>
 			<div className="comment-replies-container">
 				{ replyComponent ? <SendComment /> : null }
